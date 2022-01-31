@@ -5,6 +5,7 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRSaver;
+import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -28,6 +30,8 @@ public class JasperPrinter {
     private final WorkersService workersService;
 
     public byte[] getBytePdfReport() {
+
+        setFontSettings();
 
         byte[] report = null;
         try {
@@ -41,6 +45,10 @@ public class JasperPrinter {
             //Przygotowanie Paramatrów do wstrzyknięcia
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("company", "SofNet");
+
+            Locale locale = new Locale("pl", "PL");
+            parameters.put(JRParameter.REPORT_LOCALE, locale);
+
             //Przygotowanie Danych do wstrzyknięcia
             List<Worker> workers = workersService.findAllWorkers();
             JRDataSource dataSource = new JRBeanCollectionDataSource(workers, true);
@@ -61,6 +69,10 @@ public class JasperPrinter {
         return report;
     }
 
+    private static void setFontSettings() {
+        final DefaultJasperReportsContext context = DefaultJasperReportsContext.getInstance();
+        JRPropertiesUtil.getInstance(context).setProperty(JRStyledText.PROPERTY_AWT_IGNORE_MISSING_FONT, "true");
+    }
 
     private void printPDFDirectlyFromJava(JasperPrint jasperPrint) throws JRException {
         JRPdfExporter exporter = new JRPdfExporter();

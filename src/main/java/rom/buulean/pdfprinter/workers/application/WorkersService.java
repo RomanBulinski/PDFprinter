@@ -22,9 +22,9 @@ public class WorkersService {
     private List<Worker> findMockWorkers() {
         workers.add( new Worker("Adam","Mickiewicz") );
         workers.add( new Worker("Juliusz","Słowacki") );
-        workers.add( new Worker("Włądysław","Reymont") );
+        workers.add( new Worker("Władysław","Reymont") );
+        workers.add( new Worker("Wacław","Potocki") );
         return workers;
     }
-
 
 }
