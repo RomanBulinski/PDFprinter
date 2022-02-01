@@ -44,7 +44,7 @@ public class JasperPrinter {
 
             //Przygotowanie Paramatrów do wstrzyknięcia
             Map<String, Object> parameters = new HashMap<>();
-            parameters.put("company", "SofNet");
+            parameters.put("company", "SoftNet");
 
             Locale locale = new Locale("pl", "PL");
             parameters.put(JRParameter.REPORT_LOCALE, locale);
