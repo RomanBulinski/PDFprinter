@@ -10,6 +10,7 @@ public class Worker {
 
     private String name;
     private String surname;
+    private Integer age;
 
     public Worker() {
     }

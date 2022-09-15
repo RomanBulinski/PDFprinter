@@ -290,3 +290,7 @@ svg#clouds {
     visibility: hidden;
   }
 }
+
+mat-cell, .mat-cell {
+  width: 150px;
+}

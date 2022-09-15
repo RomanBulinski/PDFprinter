@@ -8,6 +8,125 @@
 	</queryString>
 	<field name="name" class="java.lang.String"/>
 	<field name="surname" class="java.lang.String"/>
+	<field name="age" class="java.lang.Integer"/>
+	<variable name="sum_all_pages" class="java.lang.String" calculation="Count">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+	</variable>
+	<variable name="suma kolumny" class="java.lang.Integer" resetType="Group" resetGroup="GROUP_PEOPLE" calculation="Sum">
+		<variableExpression><![CDATA[$F{age}]]></variableExpression>
+	</variable>
+	<variable name="suma czesci kolumny" class="java.lang.Integer" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{age}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="suma total kolumny" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{age}]]></variableExpression>
+	</variable>
+	<variable name="isGroupEnd" class="java.lang.Integer" resetType="Group" resetGroup="GROUP_PEOPLE" incrementType="Page" calculation="Count">
+		<variableExpression><![CDATA[10]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="currentPageInGroup" class="java.lang.Integer" resetType="Group" resetGroup="GROUP_PEOPLE" incrementType="Page" calculation="Count">
+		<variableExpression><![CDATA[10]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="alltPagesInGroup" class="java.lang.Integer" resetType="Group" resetGroup="GROUP_PEOPLE" incrementType="Page" calculation="Sum">
+		<variableExpression><![CDATA[1]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="allRowsInGroup" class="java.lang.Integer" resetType="None" incrementType="Group" incrementGroup="GROUP_PEOPLE">
+		<variableExpression><![CDATA[$V{REPORT_COUNT}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="currentRows" class="java.lang.Integer" resetType="Group" resetGroup="GROUP_PEOPLE" calculation="Count">
+		<variableExpression><![CDATA[1]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="allRowsInGroup_1" class="java.lang.Integer" resetType="Group" resetGroup="GROUP_PEOPLE" calculation="Sum">
+		<variableExpression><![CDATA[1]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="allRowsInGroup_1_1" class="java.lang.Integer" resetType="None" calculation="Sum">
+		<variableExpression><![CDATA[$V{COLUMN_COUNT}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="allRowsInGroup_1_1_1" class="java.lang.Integer" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[1]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="GROUP_PEOPLE" isStartNewPage="true" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{surname}]]></groupExpression>
+		<groupHeader>
+			<band height="76">
+				<textField>
+					<reportElement x="181" y="3" width="373" height="40" uuid="40207b25-4a3c-4f53-9cce-03ca56b253bb"/>
+					<box padding="0">
+						<pen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="16" pdfEncoding="Cp1250"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{surname}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="3" width="180" height="40" uuid="a4c2f3d3-e164-486c-9b4c-66646a7c7b7c"/>
+					<box padding="0">
+						<pen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="16" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[NAZWISKO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="202" y="42" width="179" height="30" uuid="145da7d3-ac69-4946-bdc1-86609b18350c"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="16" isBold="true" isItalic="false" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[IMIĘ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="381" y="42" width="174" height="30" uuid="abb249f4-7209-478e-8090-33493786513b"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="16" isBold="true" isItalic="false" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[WIEK]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="29">
+				<textField>
+					<reportElement x="380" y="0" width="170" height="20" printWhenGroupChanges="GROUP_PEOPLE" uuid="72b26c73-221c-40f7-8733-bb5a5695fc0a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box padding="0">
+						<pen lineWidth="1.0"/>
+					</box>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{suma kolumny}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="23" y="0" width="100" height="20" uuid="021e5e17-5729-4d9f-8826-d3f484a858cc"/>
+					<textFieldExpression><![CDATA[$V{isGroupEnd}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="181" y="0" width="199" height="20" printWhenGroupChanges="GROUP_PEOPLE" uuid="2eb2b184-430a-4d96-8020-b4867ff73d4b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box padding="0">
+						<pen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[GOTÓWKA W KASIE: ]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -45,48 +164,164 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="105" splitType="Stretch">
+		<band height="93" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="26" width="279" height="30" uuid="145da7d3-ac69-4946-bdc1-86609b18350c"/>
+				<reportElement x="190" y="3" width="190" height="20" uuid="c27cdf17-12f4-448e-8fda-6030c1ad5407">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$V{suma kolumny} > 1]]></printWhenExpression>
+				</reportElement>
+				<box padding="0">
+					<pen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="16" pdfEncoding="Cp1250"/>
+					<font size="12" pdfEncoding="Cp1250"/>
 				</textElement>
-				<text><![CDATA[IMIĘ]]></text>
+				<text><![CDATA[z przeniesienia: ]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="280" y="26" width="274" height="30" uuid="a4c2f3d3-e164-486c-9b4c-66646a7c7b7c"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="16" pdfEncoding="Cp1250"/>
+			<textField evaluationTime="Band">
+				<reportElement x="390" y="3" width="163" height="20" uuid="89e02af6-0f46-45be-80db-6c439445bce9">
+					<printWhenExpression><![CDATA[$V{suma kolumny} > 1]]></printWhenExpression>
+				</reportElement>
+				<box padding="0">
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="14"/>
 				</textElement>
-				<text><![CDATA[NAZWISKO]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$V{suma kolumny}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="383" y="29" width="170" height="20" isPrintWhenDetailOverflows="true" uuid="4bdf3f4f-6198-4eeb-95c5-cd569b1b2e4e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box padding="0">
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{suma czesci kolumny}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="29" width="100" height="20" uuid="8cf11d9c-d824-4124-a8bd-eefbcb0d1cec"/>
+				<textFieldExpression><![CDATA[$V{isGroupEnd}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="10" y="47" width="100" height="20" uuid="a66fef7c-ecbc-4893-a9ef-a4ad12674154"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="40" splitType="Stretch">
+		<band height="39" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="279" height="40" uuid="97a029ee-a301-48fa-8e7f-ba931a2109df"/>
+				<reportElement x="202" y="4" width="179" height="30" uuid="97a029ee-a301-48fa-8e7f-ba931a2109df"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" pdfEncoding="Cp1250"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="279" y="0" width="275" height="40" uuid="40207b25-4a3c-4f53-9cce-03ca56b253bb"/>
+				<reportElement x="381" y="4" width="174" height="30" uuid="b52a1007-e878-4353-82ce-8070ea4716a1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" pdfEncoding="Cp1250"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{surname}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{age}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="127" splitType="Stretch">
+			<staticText>
+				<reportElement x="178" y="0" width="199" height="20" isPrintWhenDetailOverflows="true" uuid="a1741eb6-ebd6-42e8-8188-ed7dd4978cc7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box padding="0">
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[do przeniesienia column footer: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="380" y="0" width="170" height="20" isPrintWhenDetailOverflows="true" uuid="955733dc-5056-40d2-b870-73ad320bdc61">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box padding="0">
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{suma kolumny}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="GROUP_PEOPLE">
+				<reportElement x="0" y="23" width="149" height="20" uuid="a0d7acc4-f5e4-43bb-a3ed-925f5e1ff8e4"/>
+				<textFieldExpression><![CDATA[$V{allRowsInGroup}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="0" width="149" height="20" isPrintWhenDetailOverflows="true" uuid="13cf28dc-b39f-414d-a264-7238f9f925ad"/>
+				<textFieldExpression><![CDATA[$V{currentRows}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="GROUP_PEOPLE">
+				<reportElement x="0" y="43" width="149" height="20" uuid="1293993d-26e9-4700-946b-ed4078235b95"/>
+				<textFieldExpression><![CDATA[$V{allRowsInGroup_1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="GROUP_PEOPLE">
+				<reportElement x="0" y="63" width="149" height="20" uuid="7b537426-740f-4e23-b0e1-dc14ac610680"/>
+				<textFieldExpression><![CDATA[$V{allRowsInGroup_1_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="43" width="400" height="66" printWhenGroupChanges="GROUP_PEOPLE" uuid="77a2a582-abcd-49c0-aae7-ad4e2fdfdff5">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box padding="0">
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{currentRows} + " : "+ $V{allRowsInGroup} +" : "+ $V{allRowsInGroup_1} +" : "+
+$V{allRowsInGroup_1_1} + " : "+ $V{allRowsInGroup_1_1_1};]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="GROUP_PEOPLE">
+				<reportElement x="0" y="89" width="149" height="20" uuid="3c938a2a-2bdb-496c-a9e8-f79c1fc0afce"/>
+				<textFieldExpression><![CDATA[$V{allRowsInGroup_1_1_1}]]></textFieldExpression>
+			</textField>
+		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="346" y="10" width="199" height="20" isPrintWhenDetailOverflows="true" uuid="75f1ed73-9237-492d-9fcc-7de889e96792">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$V{allRowsInGroup_1} != $V{currentRows}]]></printWhenExpression>
+				</reportElement>
+				<box padding="0">
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[page footer ]]></text>
+			</staticText>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="340" y="11" width="199" height="20" isPrintWhenDetailOverflows="true" printWhenGroupChanges="GROUP_PEOPLE" uuid="71a2212f-ada1-4777-abee-cc79a1bf8bfe">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box padding="0">
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[summary na samym koncu]]></text>
+			</staticText>
+		</band>
 	</summary>
 </jasperReport>

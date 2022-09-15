@@ -13,7 +13,7 @@ export class AppComponent {
   title = 'Front';
 
   dataWorkers = new MatTableDataSource();
-  displayedColumns = ['name', 'surname' ];
+  displayedColumns = ['name', 'surname', 'age' ];
 
   @ViewChild(MatSort, {static: true}) sort!: MatSort;
 

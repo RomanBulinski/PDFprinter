@@ -11,6 +11,11 @@
 
 <div class="content" role="main">
 
+  <div class="card-container">
+    <a class="card" target="_blank" rel="noopener">
+      <span (click)="printPdf()">Print PDF</span>
+    </a>
+  </div>
 
   <table mat-table [dataSource]="dataWorkers" matSort>
 
@@ -25,16 +30,16 @@
                 *matCellDef="let worker">{{worker.surname}}</mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="age">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Wiek</mat-header-cell>
+      <mat-cell class="letters"
+                *matCellDef="let worker">{{worker.age}}</mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
   </table>
-
-  <div class="card-container">
-    <a class="card" target="_blank" rel="noopener">
-      <span (click)="printPdf()">Print PDF</span>
-    </a>
-  </div>
 
 </div>
 
