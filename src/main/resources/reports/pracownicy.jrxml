@@ -22,9 +22,8 @@
 	<variable name="suma total kolumny" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{age}]]></variableExpression>
 	</variable>
-	<variable name="isGroupEnd" class="java.lang.Integer" resetType="Group" resetGroup="GROUP_PEOPLE" incrementType="Page" calculation="Count">
-		<variableExpression><![CDATA[10]]></variableExpression>
-		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	<variable name="isGroupEnd" class="java.lang.Boolean" resetType="None">
+		<initialValueExpression><![CDATA[Boolean.FALSE]]></initialValueExpression>
 	</variable>
 	<variable name="currentPageInGroup" class="java.lang.Integer" resetType="Group" resetGroup="GROUP_PEOPLE" incrementType="Page" calculation="Count">
 		<variableExpression><![CDATA[10]]></variableExpression>
@@ -34,7 +33,7 @@
 		<variableExpression><![CDATA[1]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="allRowsInGroup" class="java.lang.Integer" resetType="None" incrementType="Group" incrementGroup="GROUP_PEOPLE">
+	<variable name="allRowsInGroup" class="java.lang.Integer" resetType="None" incrementType="Page" calculation="Sum">
 		<variableExpression><![CDATA[$V{REPORT_COUNT}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
@@ -79,7 +78,10 @@
 					<text><![CDATA[NAZWISKO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="202" y="42" width="179" height="30" uuid="145da7d3-ac69-4946-bdc1-86609b18350c"/>
+					<reportElement x="181" y="42" width="200" height="30" uuid="145da7d3-ac69-4946-bdc1-86609b18350c"/>
+					<box padding="0">
+						<pen lineWidth="0.5"/>
+					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="16" isBold="true" isItalic="false" pdfEncoding="Cp1250"/>
 					</textElement>
@@ -87,31 +89,21 @@
 				</staticText>
 				<staticText>
 					<reportElement x="381" y="42" width="174" height="30" uuid="abb249f4-7209-478e-8090-33493786513b"/>
+					<box padding="0">
+						<pen lineWidth="0.5"/>
+					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="16" isBold="true" isItalic="false" pdfEncoding="Cp1250"/>
 					</textElement>
 					<text><![CDATA[WIEK]]></text>
 				</staticText>
+				<returnValue toVariable="isGroupEnd">
+					<expression><![CDATA[Boolean.FALSE]]></expression>
+				</returnValue>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="29">
-				<textField>
-					<reportElement x="380" y="0" width="170" height="20" printWhenGroupChanges="GROUP_PEOPLE" uuid="72b26c73-221c-40f7-8733-bb5a5695fc0a">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
-					<box padding="0">
-						<pen lineWidth="1.0"/>
-					</box>
-					<textElement>
-						<font size="14"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{suma kolumny}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="23" y="0" width="100" height="20" uuid="021e5e17-5729-4d9f-8826-d3f484a858cc"/>
-					<textFieldExpression><![CDATA[$V{isGroupEnd}]]></textFieldExpression>
-				</textField>
+			<band height="30">
 				<staticText>
 					<reportElement x="181" y="0" width="199" height="20" printWhenGroupChanges="GROUP_PEOPLE" uuid="2eb2b184-430a-4d96-8020-b4867ff73d4b">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -124,6 +116,21 @@
 					</textElement>
 					<text><![CDATA[GOTÓWKA W KASIE: ]]></text>
 				</staticText>
+				<textField>
+					<reportElement x="380" y="0" width="170" height="20" printWhenGroupChanges="GROUP_PEOPLE" uuid="5caef951-f018-4d2e-9ec4-18b87ff33630">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box padding="0">
+						<pen lineWidth="1.0"/>
+					</box>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{suma kolumny}]]></textFieldExpression>
+				</textField>
+				<returnValue toVariable="isGroupEnd">
+					<expression><![CDATA[Boolean.TRUE]]></expression>
+				</returnValue>
 			</band>
 		</groupFooter>
 	</group>
@@ -166,7 +173,7 @@
 	<columnHeader>
 		<band height="93" splitType="Stretch">
 			<staticText>
-				<reportElement x="190" y="3" width="190" height="20" uuid="c27cdf17-12f4-448e-8fda-6030c1ad5407">
+				<reportElement x="181" y="3" width="199" height="20" uuid="c27cdf17-12f4-448e-8fda-6030c1ad5407">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<printWhenExpression><![CDATA[$V{suma kolumny} > 1]]></printWhenExpression>
 				</reportElement>
@@ -179,7 +186,7 @@
 				<text><![CDATA[z przeniesienia: ]]></text>
 			</staticText>
 			<textField evaluationTime="Band">
-				<reportElement x="390" y="3" width="163" height="20" uuid="89e02af6-0f46-45be-80db-6c439445bce9">
+				<reportElement x="380" y="3" width="175" height="20" uuid="89e02af6-0f46-45be-80db-6c439445bce9">
 					<printWhenExpression><![CDATA[$V{suma kolumny} > 1]]></printWhenExpression>
 				</reportElement>
 				<box padding="0">
@@ -190,39 +197,22 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{suma kolumny}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="383" y="29" width="170" height="20" isPrintWhenDetailOverflows="true" uuid="4bdf3f4f-6198-4eeb-95c5-cd569b1b2e4e">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<box padding="0">
-					<pen lineWidth="1.0"/>
-				</box>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{suma czesci kolumny}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="9" y="29" width="100" height="20" uuid="8cf11d9c-d824-4124-a8bd-eefbcb0d1cec"/>
-				<textFieldExpression><![CDATA[$V{isGroupEnd}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="10" y="47" width="100" height="20" uuid="a66fef7c-ecbc-4893-a9ef-a4ad12674154"/>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
+			<returnValue toVariable="isGroupEnd">
+				<expression><![CDATA[Boolean.FALSE]]></expression>
+			</returnValue>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="39" splitType="Stretch">
 			<textField>
-				<reportElement x="202" y="4" width="179" height="30" uuid="97a029ee-a301-48fa-8e7f-ba931a2109df"/>
+				<reportElement x="181" y="0" width="200" height="30" uuid="97a029ee-a301-48fa-8e7f-ba931a2109df"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" pdfEncoding="Cp1250"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="381" y="4" width="174" height="30" uuid="b52a1007-e878-4353-82ce-8070ea4716a1"/>
+				<reportElement x="380" y="0" width="175" height="30" uuid="b52a1007-e878-4353-82ce-8070ea4716a1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" pdfEncoding="Cp1250"/>
 				</textElement>
@@ -233,8 +223,9 @@
 	<columnFooter>
 		<band height="127" splitType="Stretch">
 			<staticText>
-				<reportElement x="178" y="0" width="199" height="20" isPrintWhenDetailOverflows="true" uuid="a1741eb6-ebd6-42e8-8188-ed7dd4978cc7">
+				<reportElement x="181" y="0" width="199" height="20" isPrintWhenDetailOverflows="true" uuid="a1741eb6-ebd6-42e8-8188-ed7dd4978cc7">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$V{isGroupEnd}!=Boolean.TRUE]]></printWhenExpression>
 				</reportElement>
 				<box padding="0">
 					<pen lineWidth="1.0"/>
@@ -242,11 +233,12 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" pdfEncoding="Cp1250"/>
 				</textElement>
-				<text><![CDATA[do przeniesienia column footer: ]]></text>
+				<text><![CDATA[do przeniesienia : ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="380" y="0" width="170" height="20" isPrintWhenDetailOverflows="true" uuid="955733dc-5056-40d2-b870-73ad320bdc61">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$V{isGroupEnd}!=Boolean.TRUE]]></printWhenExpression>
 				</reportElement>
 				<box padding="0">
 					<pen lineWidth="1.0"/>
@@ -256,62 +248,15 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{suma kolumny}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Group" evaluationGroup="GROUP_PEOPLE">
-				<reportElement x="0" y="23" width="149" height="20" uuid="a0d7acc4-f5e4-43bb-a3ed-925f5e1ff8e4"/>
-				<textFieldExpression><![CDATA[$V{allRowsInGroup}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="-1" y="0" width="149" height="20" isPrintWhenDetailOverflows="true" uuid="13cf28dc-b39f-414d-a264-7238f9f925ad"/>
-				<textFieldExpression><![CDATA[$V{currentRows}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Group" evaluationGroup="GROUP_PEOPLE">
-				<reportElement x="0" y="43" width="149" height="20" uuid="1293993d-26e9-4700-946b-ed4078235b95"/>
-				<textFieldExpression><![CDATA[$V{allRowsInGroup_1}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Group" evaluationGroup="GROUP_PEOPLE">
-				<reportElement x="0" y="63" width="149" height="20" uuid="7b537426-740f-4e23-b0e1-dc14ac610680"/>
-				<textFieldExpression><![CDATA[$V{allRowsInGroup_1_1}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="149" y="43" width="400" height="66" printWhenGroupChanges="GROUP_PEOPLE" uuid="77a2a582-abcd-49c0-aae7-ad4e2fdfdff5">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<box padding="0">
-					<pen lineWidth="1.0"/>
-				</box>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{currentRows} + " : "+ $V{allRowsInGroup} +" : "+ $V{allRowsInGroup_1} +" : "+
-$V{allRowsInGroup_1_1} + " : "+ $V{allRowsInGroup_1_1_1};]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Group" evaluationGroup="GROUP_PEOPLE">
-				<reportElement x="0" y="89" width="149" height="20" uuid="3c938a2a-2bdb-496c-a9e8-f79c1fc0afce"/>
-				<textFieldExpression><![CDATA[$V{allRowsInGroup_1_1_1}]]></textFieldExpression>
-			</textField>
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="39" splitType="Stretch">
-			<staticText>
-				<reportElement x="346" y="10" width="199" height="20" isPrintWhenDetailOverflows="true" uuid="75f1ed73-9237-492d-9fcc-7de889e96792">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<printWhenExpression><![CDATA[$V{allRowsInGroup_1} != $V{currentRows}]]></printWhenExpression>
-				</reportElement>
-				<box padding="0">
-					<pen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" pdfEncoding="Cp1250"/>
-				</textElement>
-				<text><![CDATA[page footer ]]></text>
-			</staticText>
-		</band>
+		<band height="40" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch">
 			<staticText>
-				<reportElement x="340" y="11" width="199" height="20" isPrintWhenDetailOverflows="true" printWhenGroupChanges="GROUP_PEOPLE" uuid="71a2212f-ada1-4777-abee-cc79a1bf8bfe">
+				<reportElement x="0" y="11" width="553" height="20" isPrintWhenDetailOverflows="true" printWhenGroupChanges="GROUP_PEOPLE" uuid="71a2212f-ada1-4777-abee-cc79a1bf8bfe">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box padding="0">
@@ -320,7 +265,7 @@ $V{allRowsInGroup_1_1} + " : "+ $V{allRowsInGroup_1_1_1};]]></textFieldExpressio
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" pdfEncoding="Cp1250"/>
 				</textElement>
-				<text><![CDATA[summary na samym koncu]]></text>
+				<text><![CDATA[na koncu dokumentu]]></text>
 			</staticText>
 		</band>
 	</summary>
